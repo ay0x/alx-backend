@@ -1,7 +1,25 @@
-def index_range(page, page_size):
-    if page < 1 or page_size < 1:
-        raise ValueError("Page and page_size must be positive integers")
-    
-    start_index = (page - 1) * page_size
-    end_index = start_index + page_size - 1
-    return start_index, end_index
+#!/usr/bin/env python3
+"""
+Contains definition of index_range helper function
+"""
+from typing import Tuple
+
+
+def index_range(page: int, page_size: int) -> Tuple[int, int]:
+    """
+    Takes 2 integer arguments and returns a tuple of size two
+    containing the start and end index corresponding to the range of
+    indexes to return in a list for those pagination parameters
+    Args:
+        page (int): page number to return (pages are 1-indexed)
+        page_size (int): number of items per page
+    Return:
+        tuple(start_index, end_index)
+    """
+    start = 0
+    end = 0
+    for i in range(page):
+        start = end
+        end = end + page_size
+
+    return (start, end)
