@@ -13,19 +13,20 @@ class FIFOCache(BaseCaching):
         Initialize the class using the parent class __init__ method
         """
         super().__init__()
+        self.order = []
 
     def put(self, key, item):
         """Store a key-value pair"""
         if key is None or item is None:
-            return
-
-        if len(self.cache_data) >= self.MAX_ITEMS:
-            # Get the first key entered (FIFO)
-            first_key = next(iter(self.cache_data))
-            print("DISCARD:", first_key)
-            del self.cache_data[first_key]
-
-        self.cache_data[key] = item
+            pass
+        else:
+            if len(self.cache_data) >= self.MAX_ITEMS and\
+              key not in self.cache_data:
+                print("DISCARD: {}".format(self.order[0]))
+                del self.cache_data[self.order[0]]
+                del self.order[0]
+            self.order.append(key)
+            self.cache_data[key] = item
 
     def get(self, key):
         """Return value linked to key"""
